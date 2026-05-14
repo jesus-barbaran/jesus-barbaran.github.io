@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jesus Barbarán — QA & AI Engineer</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --warning: #d29922;
+      --danger: #f85149;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    nav .logo { font-weight: 700; font-size: 1rem; color: var(--text); }
+    nav ul { list-style: none; display: flex; gap: 24px; }
+    nav ul li a { color: var(--muted); font-size: 0.9rem; }
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+    }
+    .hero h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 8px; }
+    .hero h1 span { color: var(--accent); }
+    .hero .title {
+      font-size: 1.15rem; color: var(--muted); margin-bottom: 20px;
+    }
+    .hero .summary {
+      max-width: 720px; margin: 0 auto 28px;
+      font-size: 1rem; color: #c9d1d9;
+    }
+    .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 28px; }
+    .badge {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 5px 14px; font-size: 0.82rem; color: var(--muted);
+    }
+    .badge.green { border-color: var(--accent2); color: var(--accent2); }
+    .badge.blue  { border-color: var(--accent);  color: var(--accent);  }
+    .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 22px; border-radius: 6px; font-size: 0.9rem;
+      font-weight: 600; cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn:hover { opacity: 0.85; }
+
+    /* MAIN LAYOUT */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+    h2.section-title {
+      font-size: 1.4rem; font-weight: 700; margin-bottom: 32px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    h2.section-title::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 24px; text-align: center;
+    }
+    .stat-card .number { font-size: 2.2rem; font-weight: 700; color: var(--accent); }
+    .stat-card .label { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .skill-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px;
+    }
+    .skill-card h4 { font-size: 0.9rem; color: var(--accent); margin-bottom: 10px; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-tag {
+      background: #21262d; border-radius: 4px;
+      padding: 3px 8px; font-size: 0.78rem; color: var(--muted);
+    }
+
+    /* PROJECT CARDS */
+    .projects { display: flex; flex-direction: column; gap: 20px; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent); }
+    .project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .project-header h3 { font-size: 1.05rem; font-weight: 600; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .tag {
+      font-size: 0.75rem; padding: 2px 8px; border-radius: 12px;
+      background: #21262d; color: var(--muted);
+    }
+    .tag.green { background: #1a3d2b; color: var(--accent2); }
+    .tag.blue  { background: #1c2d3f; color: var(--accent);  }
+    .tag.yellow{ background: #2d2409; color: var(--warning); }
+    .project-card p { color: #c9d1d9; font-size: 0.9rem; margin-bottom: 12px; }
+    .project-card ul { padding-left: 18px; color: #c9d1d9; font-size: 0.88rem; }
+    .project-card ul li { margin-bottom: 5px; }
+    .metric {
+      display: inline-block; background: #1a3d2b; color: var(--accent2);
+      border-radius: 4px; padding: 2px 8px; font-size: 0.8rem; font-weight: 600;
+    }
+
+    /* TABLE */
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th { text-align: left; padding: 10px 12px; color: var(--muted); border-bottom: 1px solid var(--border); font-weight: 600; }
+    td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; }
+    tr:last-child td { border-bottom: none; }
+    .ok  { color: var(--accent2); font-weight: 600; }
+    .fail{ color: var(--danger);  font-weight: 600; }
+
+    /* EXPERIENCE */
+    .exp-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 24px; margin-bottom: 16px;
+    }
+    .exp-card h3 { font-size: 1.05rem; font-weight: 700; }
+    .exp-card .role { color: var(--accent); font-size: 0.9rem; margin-bottom: 4px; }
+    .exp-card .period { color: var(--muted); font-size: 0.85rem; margin-bottom: 14px; }
+    .exp-card ul { padding-left: 18px; color: #c9d1d9; font-size: 0.88rem; }
+    .exp-card ul li { margin-bottom: 6px; }
+    .achievements {
+      margin-top: 14px; padding: 14px;
+      background: #0d1117; border-radius: 6px; border-left: 3px solid var(--accent2);
+    }
+    .achievements p { font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .achievements ul { padding-left: 16px; }
+    .achievements ul li { font-size: 0.87rem; color: #c9d1d9; margin-bottom: 4px; }
+
+    /* CERTS */
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .cert-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px; font-size: 0.88rem; color: #c9d1d9;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .cert-icon { font-size: 1.2rem; }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 32px 24px;
+      color: var(--muted); font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.9rem; }
+      nav ul { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Jesus Barbarán</span>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Jesus <span>Barbarán</span> Reátegui</h1>
+  <div class="title">Senior QA Automation Engineer &nbsp;|&nbsp; QA Architect</div>
+  <p class="summary">
+    14+ years building enterprise-grade test automation at SAP Business Network.
+    Expert in WebdriverIO, Playwright, SAP UI5, and AI-augmented testing workflows.
+    Delivering the output of a 3-person QA team independently using Claude Code &amp; GitHub Copilot.
+  </p>
+  <div class="badges">
+    <span class="badge green">✓ 14+ Years Experience</span>
+    <span class="badge blue">WebdriverIO Expert</span>
+    <span class="badge">SAP Business Network</span>
+    <span class="badge green">✓ AI-Augmented Testing</span>
+    <span class="badge">cXML / B2B Integration</span>
+    <span class="badge blue">QA Architecture</span>
+  </div>
+  <div class="cta">
+    <a href="https://linkedin.com/in/jesus-barbaran-09672165" target="_blank"><button class="btn btn-primary">LinkedIn Profile</button></a>
+    <a href="mailto:jesus.barbaran.jb@gmail.com"><button class="btn btn-secondary">Contact Me</button></a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STATS -->
+  <section id="about">
+    <h2 class="section-title">At a Glance</h2>
+    <div class="stats">
+      <div class="stat-card"><div class="number">14+</div><div class="label">Years in QA</div></div>
+      <div class="stat-card"><div class="number">8</div><div class="label">E2E Tests Automated (Subcontracting)</div></div>
+      <div class="stat-card"><div class="number">3x</div><div class="label">Productivity Gain via AI</div></div>
+      <div class="stat-card"><div class="number">60%+</div><div class="label">Reduction in Manual Test Time</div></div>
+      <div class="stat-card"><div class="number">150</div><div class="label">Safe Concurrent Users (New Flow)</div></div>
+      <div class="stat-card"><div class="number">100%</div><div class="label">CI Pass Rate — Subcontracting Suite</div></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <h2 class="section-title">Key Projects</h2>
+    <div class="projects">
+
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <h3>Dynamic NextGen User Creation</h3>
+            <div class="project-tags">
+              <span class="tag blue">TypeScript</span>
+              <span class="tag blue">automation-central</span>
+              <span class="tag green">Production</span>
+            </div>
+          </div>
+        </div>
+        <p>Built <code>UserCreationHelper</code> — a single-call helper that dynamically creates a fresh buyer+supplier pair per test run, eliminating static credential collisions in parallel CI environments.</p>
+        <ul>
+          <li>Single call pools buyer + supplier via <code>createNextGenRelationship</code></li>
+          <li>Retry wrappers on all 5 steps — handles ETIMEDOUT + 500 automatically</li>
+          <li>Pool fallback: if direct creation fails, pre-warmed accounts dequeued automatically</li>
+          <li>Fixed critical <code>anUser.orderDate = anUser.invoiceDate</code> — prevents cXML posting failures</li>
+        </ul>
+        <br/>
+        <span class="metric">Zero test collisions in parallel CI</span>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <h3>automation-central Concurrency Threshold Research</h3>
+            <div class="project-tags">
+              <span class="tag blue">Node.js</span>
+              <span class="tag yellow">Performance</span>
+              <span class="tag">Research</span>
+            </div>
+          </div>
+        </div>
+        <p>Built a stress-test script (<code>stress-test-automation-central.mjs</code>) that fires N simultaneous requests via <code>Promise.all</code> to empirically map the failure curve of the automation-central service.</p>
+        <table style="margin-top:12px">
+          <thead><tr><th>Concurrent Requests</th><th>Old Flow</th><th>New Flow</th></tr></thead>
+          <tbody>
+            <tr><td>≤ 50</td><td class="ok">✓ Safe</td><td class="ok">✓ Safe</td></tr>
+            <tr><td>80</td><td class="fail">✗ First NPE</td><td class="ok">✓ Safe</td></tr>
+            <tr><td>150</td><td class="fail">✗ Failing</td><td class="ok">✓ Safe</td></tr>
+            <tr><td>300</td><td class="fail">✗ 80% fail</td><td class="fail">✗ 24% fail</td></tr>
+          </tbody>
+        </table>
+        <br/>
+        <span class="metric">Safe threshold: ≤50 → ≤150 (3x improvement)</span>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <h3>CI/CD Reliability &amp; Failure Analysis</h3>
+            <div class="project-tags">
+              <span class="tag blue">Jenkins</span>
+              <span class="tag">Selenium Grid</span>
+              <span class="tag green">Production</span>
+            </div>
+          </div>
+        </div>
+        <p>Built a systematic pre-run checklist and failure pattern catalog to eliminate false-positive reruns and identify root causes quickly.</p>
+        <ul>
+          <li>7-point pre-run checklist: services, Selenium slots, pool health, API smoke test</li>
+          <li>Identified Selenium Node OOM cascade: man03 slowness → Chrome RAM exhaustion → session lost</li>
+          <li>Found and fixed PR #446: <code>&&</code> vs <code>||</code> in retry guard — build 1307 went from 43% → GREEN</li>
+          <li>Pass rate thresholds: ≥65% GREEN · 45-64% YELLOW · &lt;45% RED (do not rerun)</li>
+        </ul>
+        <br/>
+        <span class="metric">Root cause identified for every failure pattern</span>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <h3>MRP — Order Change Requests Feature Coverage</h3>
+            <div class="project-tags">
+              <span class="tag blue">cXML</span>
+              <span class="tag blue">JSON API</span>
+              <span class="tag">SAP B2B</span>
+            </div>
+          </div>
+        </div>
+        <p>Documented and built test coverage for the MRP (Material Requirements Planning) change request flow — ERP → AN → Supplier → ERP confirmation — including complete manual testing templates.</p>
+        <ul>
+          <li>Mapped all 5 MRP-specific UI fields to their source JSON documents</li>
+          <li>Created 3 ready-to-use templates: PO cXML, changeRequest JSON, changeRequestConfirmation JSON</li>
+          <li>Documented UUID linking rule between CR and confirmation payloads</li>
+          <li>Coverage for BCS3-7970: CR list → detail page navigation</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <h3>Subcontracting Feature — BCS3-7605</h3>
+            <div class="project-tags">
+              <span class="tag green">8 Tests Automated</span>
+              <span class="tag blue">qTest</span>
+              <span class="tag">14 Test Cases</span>
+            </div>
+          </div>
+        </div>
+        <p>Designed 14 test cases and automated 8 covering PO/SA/SAR subcontracting flows for both buyer and supplier personas, including PDF export and version comparison.</p>
+        <ul>
+          <li>Discovered SA/SAR tab navigation requires full element IDs — partial xpath unreliable</li>
+          <li>Component row IDs differ: PO uses <code>1_1_0…1_1_3</code>, SA/SAR uses <code>10_1_0…10_1_1</code></li>
+          <li>Version comparison: asserts 12 component differences between v1 and v2</li>
+          <li>All 8 automated tests passing at 100% in CI pipeline</li>
+        </ul>
+        <br/>
+        <span class="metric">100% pass rate in CI</span>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <h3>AI-Augmented QA Workflows</h3>
+            <div class="project-tags">
+              <span class="tag blue">Claude Code</span>
+              <span class="tag blue">GitHub Copilot</span>
+              <span class="tag green">3x Productivity</span>
+            </div>
+          </div>
+        </div>
+        <p>Integrated AI tools into the full QA lifecycle — from test generation to failure analysis, wiki documentation, and qTest management — multiplying individual output by 3x.</p>
+        <ul>
+          <li>Automated Confluence wiki updates via REST API — read TypeScript source, generate content, push with version control</li>
+          <li>Generated qTest test cases from feature specs using Python upload scripts</li>
+          <li>AI-assisted CI failure triage — feed build logs, get categorized root cause analysis</li>
+          <li>Built structured knowledge base (MD files) for AI context retrieval across sessions</li>
+          <li>Designed AI agent architecture for full E2E test orchestration</li>
+        </ul>
+        <br/>
+        <span class="metric">60%+ reduction in manual execution time</span>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <h3>PDF/CSV Document Validation Module</h3>
+            <div class="project-tags">
+              <span class="tag blue">Puppeteer CDP</span>
+              <span class="tag blue">pdf-parse</span>
+              <span class="tag green">Production Sanities</span>
+            </div>
+          </div>
+        </div>
+        <p>Designed and built the <code>download-doc</code> module — a production-grade PDF/CSV download and validation solution for Selenium Grid environments. The only such solution in the PO area, now running in production sanities.</p>
+        <ul>
+          <li>Uses Puppeteer CDP bridge to intercept downloads in headless Selenium Grid</li>
+          <li>Parses PDF content with <code>pdf-parse</code> and validates fields programmatically</li>
+          <li>Handles CSV extraction and ZIP file handling with AdmZip</li>
+          <li>Adopted by the team as the standard for all document export validation</li>
+        </ul>
+        <br/>
+        <span class="metric">Unique capability — running in production</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h4>Automation & Testing</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">WebdriverIO</span><span class="skill-tag">Playwright</span>
+          <span class="skill-tag">Selenium</span><span class="skill-tag">Cypress</span>
+          <span class="skill-tag">Postman</span><span class="skill-tag">JMeter</span>
+          <span class="skill-tag">QTP/UFT</span><span class="skill-tag">qTest</span>
+          <span class="skill-tag">TestRail</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>AI & Productivity</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Claude Code</span><span class="skill-tag">GitHub Copilot</span>
+          <span class="skill-tag">Prompt Engineering</span>
+          <span class="skill-tag">AI Test Strategy</span>
+          <span class="skill-tag">LLM Test Generation</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>SAP & Web Technologies</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">SAP UI5</span><span class="skill-tag">SAP Fiori</span>
+          <span class="skill-tag">SAP Business Network</span><span class="skill-tag">cXML</span>
+          <span class="skill-tag">TypeScript</span><span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">REST/SOAP APIs</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>Document Validation</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">pdf-parse</span><span class="skill-tag">Puppeteer CDP</span>
+          <span class="skill-tag">Axios</span><span class="skill-tag">AdmZip</span>
+          <span class="skill-tag">CSV extraction</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>Databases</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">SQL Server</span><span class="skill-tag">Oracle</span>
+          <span class="skill-tag">SAP HANA</span><span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">MySQL</span><span class="skill-tag">MongoDB</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>CI/CD & DevOps</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Jenkins</span><span class="skill-tag">Azure DevOps</span>
+          <span class="skill-tag">Git</span><span class="skill-tag">GitHub</span>
+          <span class="skill-tag">Allure Reporter</span><span class="skill-tag">Docker</span>
+          <span class="skill-tag">JIRA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <h2 class="section-title">Professional Experience</h2>
+
+    <div class="exp-card">
+      <h3>QUADREM PERU — SAP Company</h3>
+      <div class="role">Senior QA Automation Engineer</div>
+      <div class="period">December 2012 – Present · 13+ years</div>
+      <ul>
+        <li>Architect and maintain the E2E automation framework for <strong>SAP Business Network Purchase Order</strong> platform — covering Buyer and Supplier personas across PO, SA, SAR, OC, ASN, and PDF export flows</li>
+        <li>Designed and delivered the <strong>download-doc module</strong> — a production-grade PDF/CSV download solution for Selenium Grid environments using Puppeteer CDP bridge. The only such solution in the area, now adopted for production sanities</li>
+        <li>Implemented <strong>dynamic user generation</strong> strategy eliminating test data collisions in parallel CI runs</li>
+        <li>Built complete <strong>Subcontracting Collaboration test suite</strong> (8 E2E tests: PO/SA/SAR Buyer+Supplier+PDF) — all passing in CI/CD pipeline</li>
+        <li>Integrated <strong>AI tools (Claude Code)</strong> into daily QA workflow — generating tests, analyzing failures, writing documentation — multiplying individual productivity by 3x</li>
+        <li>Authored <strong>QA Architecture documentation</strong> for the PO team — covering component design, locator strategy, CI/CD integration, gaps analysis, and onboarding guide</li>
+        <li>Validate SAP UI5/Fiori Elements interfaces using stable full-ID locator strategy for zero-flakiness navigation</li>
+        <li>Conduct integration, regression, and database testing (SQL Server, Oracle, SAP HANA)</li>
+      </ul>
+      <div class="achievements">
+        <p>Key Achievements</p>
+        <ul>
+          <li>Built PDF/CSV document validation — <strong>unique capability in the PO area</strong>, running in production sanities</li>
+          <li>Reduced manual test execution time by <strong>60%+</strong> through AI-augmented automation workflow</li>
+          <li>Delivered 8-test subcontracting suite with <strong>100% pass rate</strong> in CI pipeline</li>
+          <li>Architected framework documentation adopted as onboarding reference for new QA engineers</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <h3>AXCESS FINANCIAL PERU</h3>
+      <div class="role">Senior Software Engineer in Test</div>
+      <div class="period">January 2012 – December 2012</div>
+      <ul>
+        <li>Defined and executed test cases, scenarios, and acceptance criteria for batch and web applications</li>
+        <li>Performed automated and manual testing for web-based and batch applications</li>
+        <li>Conducted stress and performance testing using JMeter</li>
+        <li>Collaborated with Business Analysts and Development teams in Scrum environment</li>
+        <li>Managed defect tracking and documentation via JIRA</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CERTS -->
+  <section>
+    <h2 class="section-title">Certifications</h2>
+    <div class="certs-grid">
+      <div class="cert-card"><span class="cert-icon">🏅</span>Scrum Master Certified</div>
+      <div class="cert-card"><span class="cert-icon">☕</span>Certified Java Developer</div>
+      <div class="cert-card"><span class="cert-icon">🗄️</span>Microsoft SQL Server Database Management</div>
+      <div class="cert-card"><span class="cert-icon">🤖</span>AI Tools for Software Engineering (Claude Code, GitHub Copilot)</div>
+      <div class="cert-card"><span class="cert-icon">🧪</span>Functional Test Automation with Selenium and Java</div>
+      <div class="cert-card"><span class="cert-icon">🌐</span>Web Application Development</div>
+      <div class="cert-card"><span class="cert-icon">🔌</span>Cisco Networking Standards</div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2 class="section-title">Contact</h2>
+    <div class="stats">
+      <div class="stat-card">
+        <div style="font-size:1.8rem">✉️</div>
+        <div class="label" style="margin-top:8px">Email</div>
+        <a href="mailto:jesus.barbaran.jb@gmail.com" style="font-size:0.85rem">jesus.barbaran.jb@gmail.com</a>
+      </div>
+      <div class="stat-card">
+        <div style="font-size:1.8rem">💼</div>
+        <div class="label" style="margin-top:8px">LinkedIn</div>
+        <a href="https://linkedin.com/in/jesus-barbaran-09672165" target="_blank" style="font-size:0.85rem">jesus-barbaran-09672165</a>
+      </div>
+      <div class="stat-card">
+        <div style="font-size:1.8rem">📍</div>
+        <div class="label" style="margin-top:8px">Location</div>
+        <span style="font-size:0.85rem;color:#c9d1d9">Lima, Peru</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Jesus Barbarán Reátegui · Senior QA Automation Engineer · &copy; 2026</p>
+  <p style="margin-top:6px">Built with GitHub Pages</p>
+</footer>
+
+</body>
+</html>
